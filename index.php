@@ -16,8 +16,9 @@
     <div class="avatar">
         <div class="avatar-img">
             <!-- <img src="" alt=""> -->
+            <i class="fa fa-user-circle"></i>
         </div>
-        <h6><span class="badge badge-secondary">User</span></h6>
+        <h6><span class="badge badge-secondary">@user</span></h6>
     </div>
     <hr>
     <div class="nav-link">
@@ -34,7 +35,13 @@
             <i class="fa fa-bars"></i>
         </button>
     </div>
-    <div class="content">
+    <div class="content p-3">
+
+        <div class="card">
+            <div class="card-body">
+
+            </div>
+        </div>
 
         <div class="nav-footer">
             <div class="d-flex justify-content-center align-items-center">
@@ -45,7 +52,7 @@
         </div>
     </div>
 </div>
-<script src="assets/custom.js?v=<?php echo time(); ?>"></script>
+<script src="asset/custom.js?v=<?php echo time(); ?>"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
 </body>
 </html>
