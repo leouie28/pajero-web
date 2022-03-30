@@ -8,9 +8,20 @@
     min-height: 100vh;
     position: relative;
 }
+.content-block{
+    display: none;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: rgb(000,000,000,.6);
+    z-index: 110;
+    transition: .3s ease-in-out;
+}
 .header{
     background: #fff;
-    width: 100vw;
+    width: 100%;
     height: 60px;
     position: fixed;
     box-shadow: 5px 5px 10px #d9d9d9;
@@ -23,7 +34,7 @@
     height: 100vh;
     top: 0;
     left: 0;
-    z-index: 110;
+    z-index: 120;
     box-shadow: 2px 2px 10px #d4d4d4;
     transition: .5s ease-in-out;
 }
@@ -56,6 +67,10 @@
     padding: 8px;
     padding-left: 20px;
     cursor: pointer;
+    margin-bottom: 1px;
+}
+.sidenav .nav-link ul .active{
+    background: #ccc;
 }
 .sidenav .nav-link ul li:hover{
     background: #cccccc;
@@ -97,6 +112,38 @@
 .nav-footer .btn{
     margin: 5px;
 }
+.login{
+    width: 420px;
+}
+.cus-modal{
+    display: none;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 150;
+    background: rgb(000,000,000,.4);
+    align-items: center;
+    justify-content: center;
+}
+.cus-modal .card{
+    width: 500px;
+}
+.progress-bar{
+    width: 100%;
+}
+@keyframes loading{
+    from{
+        width: 0%;
+    }
+    to{
+        width: 100%;
+    }
+}
+.anim-loading{
+    animation: 122s linear loading !important;
+}
 /* MOBILE */
 @media(max-width: 900px){
     .sidenav{
@@ -106,8 +153,14 @@
         width: 100%;
     }
     .nav-footer{
-        display: flex;
+        display: none;
         width: 100%;
         justify-content: center;
+    }
+    .cus-modal .card{
+        width: 90%;
+    }
+    .login{
+        width: 100%;
     }
 }

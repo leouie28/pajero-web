@@ -37,9 +37,26 @@
     </div>
     <div class="content p-3">
 
-        <div class="card">
+        <div class="card shadow">
+            <div class="card-header">
+                <h5>Booking form</h5>
+            </div>
             <div class="card-body">
-
+                <div class="form-group">
+                    <label>Pickup Place:</label>
+                    <input type="text" name="" class="form-control" placeholder="Type specific location"/>
+                    <hr>
+                    <label>Destination Place:</label>
+                    <input type="text" name="" class="form-control" placeholder="Type specific location"/>
+                    <hr>
+                    <label>Note: <span class="text-secondary">optional</span></label>
+                    <textarea name="" placeholder="Additional information.." class="form-control" style="min-height: 120px;"></textarea>
+                    <hr>
+                    <div class="text-right">
+                        <button class="btn btn-danger">Reset</button>
+                        <button class="btn btn-info">Place Booking</button>
+                    </div>
+                </div>
             </div>
         </div>
 
