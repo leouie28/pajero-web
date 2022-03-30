@@ -108,5 +108,22 @@ if(isset($_POST['fetch_offers']))
     </script>
     <?php
 }
+if(isset($_POST['dr_res']))
+{
+    $pajero = $_POST['driver'];
 
+    $sel = $conn->query("SELECT of_stat FROM offer WHERE of_id = $pajero");
+    if($sel->num_rows>0)
+    {
+        $row = $sel->fetch_assoc();
+        if($row['of_stat']=='otw')
+        {
+            echo 1;
+        }
+        else
+        {
+            echo 0;
+        }
+    }
+}
 ?>
