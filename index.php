@@ -31,7 +31,7 @@
 </div>
 <div class="main"> 
     <div class="header d-flex justify-content-start align-items-center">
-        <button class="btn bar">
+        <button class="btn bar-btn">
             <i class="fa fa-bars"></i>
         </button>
     </div>

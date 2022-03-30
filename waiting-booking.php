@@ -100,7 +100,7 @@ include ('includes/passenger-header.php');
                                     }
                                 });
                             } else{
-                                console.log('listening to database');
+                                //console.log('listening to database');
                             }
                         }
                     });
