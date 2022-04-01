@@ -8,6 +8,21 @@
     min-height: 100vh;
     position: relative;
 }
+#chart_wrap {
+    position: relative;
+    padding-bottom: 100%;
+    height: 0;
+    overflow:hidden;
+}
+
+#donutchart {
+    transform: scale(1.2);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width:100%;
+    height:100%;
+}
 .content-block{
     display: none;
     position: fixed;
@@ -142,7 +157,10 @@
     }
 }
 .anim-loading{
-    animation: 122s linear loading !important;
+    /* animation: linear loading !important; */
+    animation-name: loading !important;
+    animation-timing-function: linear !important;
+    animation-delay: 2s !important;
 }
 /* MOBILE */
 @media(max-width: 900px){

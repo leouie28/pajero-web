@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Manila');
 $Server = "127.0.0.1";//serverhost
 $Uname = "root";
 $UPass = "";

@@ -126,4 +126,38 @@ if(isset($_POST['dr_res']))
         }
     }
 }
+if(isset($_POST['fetch_accepted']))
+{
+    $driver = $_POST['driver'];
+    $sel = $conn->query("SELECT * FROM offer 
+    LEFT JOIN booking ON offer.bk_id = booking.bk_id 
+    LEFT JOIN user ON booking.passenger_id = user.user_id 
+    WHERE offer.of_stat = 'accepted' AND offer.driver_id = $driver");
+    if($sel->num_rows>0)
+    {
+        $row = $sel->fetch_assoc();
+        ?>
+        <div class="cus-modal last-id" data-id="0" style="display: flex;">
+            <div class="card">
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <strong><?= $row['user_fname']; ?> accepted your offer!</strong><br>
+                        This passenger is now waiting for your response. <br>
+                    </div>
+                    <div class="text-right">
+                        <a href="../pajero/booking-list.php?cancel=<?= $row['of_id']; ?>" class="btn btn-danger">Cancel Offer</a>
+                        <a href="../pajero/booking-list.php?pickup=<?= $row['of_id']; ?>" class="btn btn-info">Pick up now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php
+    }
+    else
+    {
+        ?>
+        <div class="cus-modal last-id" data-id="1"></div>
+        <?php
+    }
+}
 ?>
