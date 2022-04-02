@@ -42,8 +42,8 @@ else
     <hr>
     <div class="nav-link">
         <ul>
-            <li class="<?= $act[0]; ?>"><a href="home.php"><i class="fa fa-home"></i> Home</a></li>
-            <li class="<?= $act[1]; ?>"><a href="booking.php"><i class="fa fa-map-marker"></i> Booking</a></li>
+            <li class="<?= $act[0]; ?>"><a href="home.php"><i class="fa fa-tachometer"></i> Dashboard</a></li>
+            <li class="<?= $act[1]; ?>"><a href="booking-active.php"><i class="fa fa-map-marker"></i> Passenger booking</a></li>
             <li class="<?= $act[2]; ?>"><a href="history.php"><i class="fa fa-history"></i> History</a></li>
             <li><a href="logout.php"><i class="fa fa-sign-out"></i> Logout</a></li>
         </ul>

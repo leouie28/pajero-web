@@ -26,7 +26,7 @@ include ('includes/driver-header.php');
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
-                        <a class="nav-link" href="booking-active.php">Active 
+                        <a class="nav-link active" href="">Active 
                             <?php
                             $driver = $_SESSION['id'];
                             $bk_ids = array();
@@ -47,7 +47,7 @@ include ('includes/driver-header.php');
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="">Available</a>
+                        <a class="nav-link" href="booking-list.php">Available</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="booking-pending.php">Pending 
@@ -94,7 +94,7 @@ include ('includes/driver-header.php');
                                 $type =  '<span class="badge badge-info">Special</span>';
                             }
                             ?>
-                            <div class="card mb-2">
+                            <div class="card alert-success text-dark mb-2">
                                 <div class="card-header p-2">
                                     <h6 class="m-0" style="font-size:18px;"> <?= $type . " " . $name; ?></h6>
                                 </div>
@@ -111,30 +111,14 @@ include ('includes/driver-header.php');
                                     <div class="col">
                                         <i class="fa fa-sticky-note"></i> Note: <?= $row['bk_note']; ?>
                                     </div>
-                                    <div class="d-flex justify-content-between mt-2">
-                                        <div class="text-primary">
-                                            <i class="fa fa-clock-o"></i> 
-                                            Posted: 
-                                            <?php
-                                            $time = $row['bk_update'];
-                                            $time = new DateTime($time);
-                                            $posted = $time->diff(new DateTime());
-                                            if($posted->d>=1)
-                                            {
-                                                echo $posted->d . ' day ago';
-                                            }
-                                            elseif($posted->h>=1)
-                                            {
-                                                echo $posted->h . ' hr ago';
-                                            }
-                                            elseif($posted->i>=1)
-                                            {
-                                                echo $posted->i . ' m ago';
-                                            }
-                                            ?>
-                                        </div>
-                                        <button class="offer-btn btn btn-success btn-sm" data-id="<?= $row['bk_id']; ?>" data-user="<?= $name; ?>">OFFER SERVICE</button>
+                                    <hr>
+                                    <div class="text-center my-3">
+                                        <h5 class="text-primary">This passenger is waiting for you.</h5>
                                     </div>
+                                    <div class="progress" style="height:10px;">
+                                        <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                                    </div>
+                                    
                                 </div>
                             </div>
                             <?php
@@ -148,16 +132,22 @@ include ('includes/driver-header.php');
                 else
                 {
                     ?>
-                    <div class="alert alert-info py-4">
-                        No available booking at the moment. <a href="">Refresh page</a>
+                    <div>
+                        <img class="my-3 card-img-top" src="media/direction.svg" alt="Adventure">
+                        <div class="mt-5 alert alert-info">
+                            You don't have active offer at the moment. <a href="booking-list.php">Find booking here</a>
+                        </div>
                     </div>
                     <?php
                 }
                 if($disemp==1)
                 {
                     ?>
-                    <div class="alert alert-info my-4">
-                        No available booking at the moment. <a href="">Refresh page</a>
+                    <div>
+                        <img class="my-3 card-img-top" src="media/direction.svg" alt="Adventure">
+                        <div class="mt-5 alert alert-info">
+                            You don't have active offer at the moment. <a href="booking-list.php">Find booking here</a>
+                        </div>
                     </div>
                     <?php
                 }

@@ -39,13 +39,13 @@ include ('includes/header.php');
                                 {
                                     $_SESSION['id'] = $row['user_id'];
                                     $_SESSION['type'] = $row['user_type'];
-                                    header('location:booking.php');
+                                    header('location:home.php');
                                 }
                                 elseif($row['user_type']=='driver')
                                 {
                                     $_SESSION['id'] = $row['user_id'];
                                     $_SESSION['type'] = $row['user_type'];
-                                    header('location:booking-list.php');
+                                    header('location:booking-active.php');
                                 }
                                 elseif($row['user_type']=='admin')
                                 {

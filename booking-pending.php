@@ -47,13 +47,12 @@ include ('includes/driver-header.php');
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="">Available</a>
+                        <a class="nav-link" href="booking-list.php">Available</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="booking-pending.php">Pending 
+                        <a class="nav-link active" href="">Pending 
                             <?php
                             $driver = $_SESSION['id'];
-                            $bk_ids = array();
                             $pend = $conn->query("SELECT of_id, bk_id FROM offer WHERE driver_id = $driver AND of_stat = 'pending'");
                             if($pend->num_rows>0)
                             {   
@@ -62,10 +61,6 @@ include ('includes/driver-header.php');
                                 <?= $pend->num_rows; ?>
                                 </div>
                                 <?php
-                                while($bks = $pend->fetch_assoc())
-                                {
-                                    $bk_ids[] = $bks['bk_id'];
-                                }
                             }
                             ?>
                         </a>
@@ -94,7 +89,7 @@ include ('includes/driver-header.php');
                                 $type =  '<span class="badge badge-info">Special</span>';
                             }
                             ?>
-                            <div class="card mb-2">
+                            <div class="card alert-warning text-dark mb-2">
                                 <div class="card-header p-2">
                                     <h6 class="m-0" style="font-size:18px;"> <?= $type . " " . $name; ?></h6>
                                 </div>
@@ -111,29 +106,10 @@ include ('includes/driver-header.php');
                                     <div class="col">
                                         <i class="fa fa-sticky-note"></i> Note: <?= $row['bk_note']; ?>
                                     </div>
-                                    <div class="d-flex justify-content-between mt-2">
-                                        <div class="text-primary">
-                                            <i class="fa fa-clock-o"></i> 
-                                            Posted: 
-                                            <?php
-                                            $time = $row['bk_update'];
-                                            $time = new DateTime($time);
-                                            $posted = $time->diff(new DateTime());
-                                            if($posted->d>=1)
-                                            {
-                                                echo $posted->d . ' day ago';
-                                            }
-                                            elseif($posted->h>=1)
-                                            {
-                                                echo $posted->h . ' hr ago';
-                                            }
-                                            elseif($posted->i>=1)
-                                            {
-                                                echo $posted->i . ' m ago';
-                                            }
-                                            ?>
-                                        </div>
-                                        <button class="offer-btn btn btn-success btn-sm" data-id="<?= $row['bk_id']; ?>" data-user="<?= $name; ?>">OFFER SERVICE</button>
+                                    <hr>
+                                    <div class="text-center">
+                                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> 
+                                        <strong>Waiting for passenger response..</strong>
                                     </div>
                                 </div>
                             </div>
@@ -148,16 +124,16 @@ include ('includes/driver-header.php');
                 else
                 {
                     ?>
-                    <div class="alert alert-info py-4">
-                        No available booking at the moment. <a href="">Refresh page</a>
+                    <div class="alert alert-warning py-4">
+                        You don't have pending offer at the moment . <a href="">Refresh page</a>
                     </div>
                     <?php
                 }
                 if($disemp==1)
                 {
                     ?>
-                    <div class="alert alert-info my-4">
-                        No available booking at the moment. <a href="">Refresh page</a>
+                    <div class="alert alert-warning my-4">
+                        You don't have pending offer at the moment . <a href="">Refresh page</a>
                     </div>
                     <?php
                 }
