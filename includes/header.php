@@ -13,20 +13,3 @@
 </head>
 <body>
 <div class="content-block"></div>
-<div class="sidenav">
-    <div class="avatar">
-        <div class="avatar-img">
-            <!-- <img src="" alt=""> -->
-            <i class="fa fa-user-circle"></i>
-        </div>
-        <h5>Pajero Web-App</h5>
-    </div>
-    <hr>
-    <div class="nav-link">
-        <ul>
-            <li class="<?= $act[0]; ?>"><a href="#"><i class="fa fa-home"></i> Home</a></li>
-            <li class="<?= $act[1]; ?>"><a href="#"><i class="fa fa-user-plus"></i> Signup</a></li>
-            <li class="<?= $act[2]; ?>"><a href="#"><i class="fa fa-sign-in"></i> Login</a></li>
-        </ul>
-    </div>
-</div>
