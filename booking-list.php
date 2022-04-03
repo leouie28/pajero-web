@@ -73,8 +73,12 @@ include ('includes/driver-header.php');
                 </ul>
             </div>
             <div class="card-body p-3">
+                <div class="new-bk">
+
+                </div>
                 <?php
                 $disemp = 0;
+                $count = 0;
                 $sel = $conn->query("SELECT * FROM booking 
                 LEFT JOIN user ON booking.passenger_id = user.user_id 
                 WHERE bk_stat = 'searching' ORDER BY bk_id DESC");
@@ -82,81 +86,73 @@ include ('includes/driver-header.php');
                 {
                     while($row = $sel->fetch_assoc())
                     {
-                        if(!in_array($row['bk_id'], $bk_ids))
+                        $count++;
+                        $name = $row['user_fname'] . " " . $row['user_lname'];
+                        if($row['bk_type']=='standard')
                         {
-                            $name = $row['user_fname'] . " " . $row['user_lname'];
-                            if($row['bk_type']=='standard')
-                            {
-                                $type = '<span class="badge badge-info">Standard</span>';
-                            }
-                            elseif($row['bk_type']=='special')
-                            {
-                                $type =  '<span class="badge badge-info">Special</span>';
-                            }
-                            ?>
-                            <div class="card mb-2">
-                                <div class="card-header p-2">
-                                    <h6 class="m-0" style="font-size:18px;"> <?= $type . " " . $name; ?></h6>
+                            $type = '<span class="badge badge-info">Standard</span>';
+                        }
+                        elseif($row['bk_type']=='special')
+                        {
+                            $type =  '<span class="badge badge-info">Special</span>';
+                        }
+                        ?>
+                        <div class="card mb-2 <?php
+                        if($count==1)
+                        {
+                            echo 'last-id';
+                        }
+                        ?>
+                        " data-last="<?= $row['bk_id']; ?>">
+                            <div class="card-header p-2">
+                                <h6 class="m-0" style="font-size:18px;"> <?= $type . " " . $name; ?></h6>
+                            </div>
+                            <div class="card-body p-3">
+                                <div class="col">
+                                    <i class="fa fa-map-marker"></i> Pickup: <strong><?= $row['bk_from']; ?></strong>
                                 </div>
-                                <div class="card-body p-3">
-                                    <div class="col">
-                                        <i class="fa fa-map-marker"></i> Pickup: <strong><?= $row['bk_from']; ?></strong>
+                                <div class="col">
+                                    <i class="fa fa-location-arrow"></i> Destination: <strong><?= $row['bk_route']; ?></strong>
+                                </div>
+                                <div class="col">
+                                    <i class="fa fa-user"></i> Pax: <strong><?= $row['bk_pax']; ?></strong>
+                                </div>
+                                <div class="col">
+                                    <i class="fa fa-sticky-note"></i> Note: <?= $row['bk_note']; ?>
+                                </div>
+                                <div class="d-flex justify-content-between mt-2">
+                                    <div class="text-primary">
+                                        <i class="fa fa-clock-o"></i> 
+                                        Posted: 
+                                        <?php
+                                        $time = $row['bk_update'];
+                                        $time = new DateTime($time);
+                                        $posted = $time->diff(new DateTime());
+                                        if($posted->d>=1)
+                                        {
+                                            echo $posted->d . ' day ago';
+                                        }
+                                        elseif($posted->h>=1)
+                                        {
+                                            echo $posted->h . ' hr ago';
+                                        }
+                                        elseif($posted->i>=1)
+                                        {
+                                            echo $posted->i . ' m ago';
+                                        }
+                                        ?>
                                     </div>
-                                    <div class="col">
-                                        <i class="fa fa-location-arrow"></i> Destination: <strong><?= $row['bk_route']; ?></strong>
-                                    </div>
-                                    <div class="col">
-                                        <i class="fa fa-user"></i> Pax: <strong><?= $row['bk_pax']; ?></strong>
-                                    </div>
-                                    <div class="col">
-                                        <i class="fa fa-sticky-note"></i> Note: <?= $row['bk_note']; ?>
-                                    </div>
-                                    <div class="d-flex justify-content-between mt-2">
-                                        <div class="text-primary">
-                                            <i class="fa fa-clock-o"></i> 
-                                            Posted: 
-                                            <?php
-                                            $time = $row['bk_update'];
-                                            $time = new DateTime($time);
-                                            $posted = $time->diff(new DateTime());
-                                            if($posted->d>=1)
-                                            {
-                                                echo $posted->d . ' day ago';
-                                            }
-                                            elseif($posted->h>=1)
-                                            {
-                                                echo $posted->h . ' hr ago';
-                                            }
-                                            elseif($posted->i>=1)
-                                            {
-                                                echo $posted->i . ' m ago';
-                                            }
-                                            ?>
-                                        </div>
-                                        <button class="offer-btn btn btn-success btn-sm" data-id="<?= $row['bk_id']; ?>" data-user="<?= $name; ?>">OFFER SERVICE</button>
-                                    </div>
+                                    <button class="offer-btn btn btn-success btn-sm" data-id="<?= $row['bk_id']; ?>" data-user="<?= $name; ?>">OFFER SERVICE</button>
                                 </div>
                             </div>
-                            <?php
-                        }
-                        else
-                        {
-                            $disemp = 1;
-                        }
+                        </div>
+                        <?php
                     }
                 }
                 else
                 {
                     ?>
                     <div class="alert alert-info py-4">
-                        No available booking at the moment. <a href="">Refresh page</a>
-                    </div>
-                    <?php
-                }
-                if($disemp==1)
-                {
-                    ?>
-                    <div class="alert alert-info my-4">
                         No available booking at the moment. <a href="">Refresh page</a>
                     </div>
                     <?php
@@ -208,6 +204,48 @@ include ('includes/driver-header.php');
                 $('.offer-modal .card h5').text(name + ' booking');
                 $('.offer-modal form input[name=bk]').val(bk);
             })
+
+            $(document).ready(function() {
+
+                var count = 0;
+
+                setInterval(latestBooking, 5000);
+
+                function latestBooking() {
+                    last_id = $('.last-id').data('last');
+                    latest_bk = 1;
+                    fetch_latest_bk = 1;
+                    $.ajax({
+                        url: 'backend/backend-fetch2.php',
+                        type: 'post',
+                        data: {
+                            last_id: last_id,
+                            latest_bk: latest_bk
+                        },
+                        success: function(res) {
+                            if(res==1){
+                                count = count + 1;
+                                $('.last-id').removeClass('last-id');
+                                $('.new-bk').append('<div class="res'+count+'"></div>');
+                                $.ajax({
+                                    url: 'backend/backend-fetch2.php',
+                                    type: 'post',
+                                    data: {
+                                        last_id: last_id,
+                                        fetch_latest_bk: fetch_latest_bk
+                                    },
+                                    success: function(html) {
+                                        $('.res'+count).html(html);
+                                    }
+                                });
+                            }
+                            else{
+                                //console.log('No data');
+                            }
+                        }
+                    });
+                }
+            });     
         </script>
 <?php
 include ('includes/driver-watch.php');

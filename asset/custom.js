@@ -1,3 +1,12 @@
+
+$(".nav-link ul li").each(function() {
+	$(this).click(function() {
+		link = $(this).children("a").attr('href');
+		window.location.href = link;
+		/*alert(link);*/
+	});
+});
+
 function navScript(trigger) {
     var btn = trigger;
     if ($(window).width() <= 960){

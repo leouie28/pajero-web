@@ -70,9 +70,11 @@ include ('includes/driver-header.php');
             <div class="card-body p-3">
                 <?php
                 $disemp = 0;
-                $sel = $conn->query("SELECT * FROM booking 
+                $id = $_SESSION['id'];
+                $sel = $conn->query("SELECT * FROM offer 
+                LEFT JOIN booking ON offer.bk_id = booking.bk_id 
                 LEFT JOIN user ON booking.passenger_id = user.user_id 
-                WHERE bk_stat = 'searching' ORDER BY bk_id DESC");
+                WHERE offer.driver_id = $id AND offer.of_stat = 'pending' ORDER BY offer.of_update DESC");
                 if($sel->num_rows>0)
                 {
                     while($row = $sel->fetch_assoc())

@@ -20,10 +20,23 @@ include ('includes/passenger-header.php');
         {
             //change offer status
             $pajero = $_GET['pajero'];
+            $bk = $_GET['booking'];
             $res ="UPDATE offer SET of_stat = 'accepted' WHERE of_id = $pajero";
             if($conn->query($res)===TRUE)
             {
+                $bk = "UPDATE booking SET bk_stat = 'waiting' WHERE bk_id = $bk";
+                if($conn->query($bk)===TRUE)
+                {
 
+                }
+                else
+                {
+                    ?>
+                    <script>
+                        alert('Error on pajero request!');
+                    </script>
+                    <?php
+                }
             }
             else
             {
@@ -182,7 +195,7 @@ include ('includes/passenger-header.php');
                         </div>
                         <hr>
                         <div class="text-center mb-3">
-                            <a href="" class="btn btn-success">Mark as completed trip <i class="fa fa-check-circle"></i></a>
+                            <a href="home.php?completed=<?= $_GET['arrive']; ?>" class="btn btn-success">Mark as completed trip <i class="fa fa-check-circle"></i></a>
                         </div>
                         <!-- <div class="alert alert-warning">
                             <i class="fa fa-exclamation-triangle"></i> If the pajero did not <span class="res-war">response within 2 minutes</span>, the <strong>CHANGE PAJERO BUTTON</strong> will be abailable.

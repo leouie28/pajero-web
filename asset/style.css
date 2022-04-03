@@ -8,6 +8,15 @@
     min-height: 100vh;
     position: relative;
 }
+.account-blocked{
+    width: 100vw;
+    height: 100vh;
+}
+.account-blocked img{
+    object-fit: cover;
+    width: 80%;
+    height: auto;
+}
 #chart_wrap {
     position: relative;
     padding-bottom: 100%;

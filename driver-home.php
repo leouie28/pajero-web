@@ -37,6 +37,42 @@ include ('includes/driver-header.php');
             </div>
         </div>
 
+        <?php
+        $completed = 0;
+        $pending = 0;
+        $other = 0;
+        $driver = $_SESSION['id'];
+        $sel = $conn->query("SELECT booking.driver_id AS user, offer.of_id AS num FROM offer 
+        LEFT JOIN booking ON offer.bk_id = booking.bk_id 
+        WHERE offer.driver_id = $driver");
+        if($sel->num_rows>0)
+        {
+            while($row = $sel->fetch_assoc())
+            {
+                if(!empty($row['user']))
+                {
+                    if($row['user']!=$driver)
+                    {
+                        $other = $other + 1;
+                    }
+                    else
+                    {
+                        $completed = $completed + 1;
+                    }
+                }
+                else
+                {
+                    $pending = $pending + 1;
+                }
+            }
+        }
+        else
+        {
+
+        }
+        $total = $completed + $pending + $other;
+        ?>
+
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
         $(window).on("throttledresize", function (event) {
@@ -52,15 +88,24 @@ include ('includes/driver-header.php');
         google.charts.setOnLoadCallback(drawChart);
         function drawChart() {
             var data = google.visualization.arrayToDataTable([
-            ['Task', 'Hours per Day'],
-            ['Completed',     11],
-            ['Pending',      2],
-            ['Take by other',  2]
+            ['Activity', 'Engage to booking'],
+            ['Completed',     <?= $completed; ?>],
+            ['Pending',      <?= $pending; ?>],
+            ['Take by other',  <?= $other; ?>]
             ]);
 
             var options = {
             title: 'Trip Activities',
-            pieHole: 0.3,
+            <?php
+            if($total>1)
+            {
+                echo 'pieHole: 0.3';
+            }
+            else
+            {
+                echo 'pieHole: 0';
+            }
+            ?>,
             legend: {
                 position: 'top',
                 maxLines: 2

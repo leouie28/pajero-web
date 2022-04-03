@@ -12,21 +12,20 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="content-block"></div>
-<div class="sidenav">
-    <div class="avatar">
-        <div class="avatar-img">
-            <!-- <img src="" alt=""> -->
-            <i class="fa fa-user-circle"></i>
+    <div class="account-blocked d-flex justify-content-center align-items-center">
+        <div class="text-center p-3">
+            <div class="display-4 mb-3">Account Blocked</div>
+            <img src="media/denied.svg" alt="">
+            <div class="mt-3 alert alert-dark text-left">
+                <strong>Your account is currently blocked to our system.</strong><br>
+                Possible problem:
+                <ul class="ml-3">
+                    <li>Expired pajero</li>
+                    <li>Banned account</li>
+                </ul>
+            </div>
         </div>
-        <h5>Pajero Web-App</h5>
     </div>
-    <hr>
-    <div class="nav-link">
-        <ul>
-            <li class="<?= $act[0]; ?>"><a href="#"><i class="fa fa-home"></i> Home</a></li>
-            <li class="<?= $act[1]; ?>"><a href="signup.php"><i class="fa fa-user-plus"></i> Signup</a></li>
-            <li class="<?= $act[2]; ?>"><a href="login.php"><i class="fa fa-sign-in"></i> Login</a></li>
-        </ul>
-    </div>
-</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+</body>
+</html>

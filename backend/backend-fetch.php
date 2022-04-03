@@ -66,6 +66,7 @@ if(isset($_POST['fetch_offers']))
                 </div>
                 <button class="acpt-btn btn btn-success btn-sm" 
                 data-id="<?= $row['of_id']; ?>" 
+                data-bk="<?= $row['bk_id']; ?>"
                 data-driver="<?= $driver; ?>" 
                 data-time="<?= $row['of_time']; ?>">Accept offer <i class="fa fa-check-circle"></i></button>
             </div>
@@ -97,7 +98,8 @@ if(isset($_POST['fetch_offers']))
         });
         $('.acpt-btn').click(function() {
             id = $(this).data('id');
-            link = 'waiting-pajero.php?pajero='+id;
+            bk = $(this).data('bk');
+            link = 'waiting-pajero.php?pajero='+id+'&booking='+bk;
             driver = $(this).data('driver');
             time = $(this).data('time');
             $('.acpt-modal').css('display','flex');

@@ -2,7 +2,7 @@
 session_start();
 ob_start();
 $act = array();
-$act[2] = 'active';
+$act[1] = 'active';
 include ('includes/conn.php');
 include ('includes/passenger-header.php');
 ?>

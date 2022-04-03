@@ -20,22 +20,77 @@ include ('includes/passenger-header.php');
             <div class="card-body">
 
                 <?php
+
+                if(isset($_GET['completed']))
+                {
+                    $id = $_GET['completed'];
+
+                    $sel = $conn->query("SELECT bk_id, driver_id FROM offer WHERE of_id =  $id");
+                    $res = $sel->fetch_assoc();
+                    $bk_id = $res['bk_id'];
+                    $driver_id = $res['driver_id'];
+
+                    $upd = "UPDATE offer SET of_stat = 'completed' WHERE of_id = $id";
+                    if($conn->query($upd)===TRUE)
+                    {
+                        $upd2 = "UPDATE booking SET bk_stat = 'completed', driver_id = $driver_id WHERE bk_id = $bk_id";
+                        if($conn->query($upd2)===TRUE)
+                        {
+                            ?>
+                            <div class="cus-modal" style="display:flex;">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="alert alert-success">
+                                            <strong>Trip successfully completed!</strong><br>
+                                            Thank you for using our system
+                                        </div>
+                                        <div class="text-right">
+                                            <a href="home.php" class="btn btn-dark">Close</a>
+                                            <a href="booking.php" class="btn btn-info">Book Again <i class="fa fa-map-marker"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                    }
+                }
+
+
                 $id = $_SESSION['id'];
-                $sel = $conn->query("SELECT * FROM booking WHERE passenger_id = $id AND bk_stat = 'searching'");
-                if($sel->num_rows<0)
+                $sel = $conn->query("SELECT * FROM booking WHERE passenger_id = $id AND NOT bk_stat = 'completed'");
+                if($sel->num_rows>0)
                 {
                     while($row = $sel->fetch_assoc())
                     {
+                        $bk_id = $row['bk_id'];
                         ?>
-                        <div class="alert-secondary d-flex justify-content-between align-items-center border shadow-sm rounded" style="overflow: hidden;">
+                        <div class="alert-secondary mb-2 d-flex justify-content-between align-items-center border shadow-sm rounded" style="overflow: hidden;">
                             <div class="col-8">
                                 Route:
-                                <strong>Location</strong>
+                                <strong><?= $row['bk_route']; ?></strong>
                             </div>
                             <div class="p-3 bg-info col-3">
-                                <a href="waiting-booking.php?booking=<?= $row['bk_id']; ?>">
-                                    <strong class="text-white">VIEW</strong>
-                                </a>
+                                <?php
+                                if($row['bk_stat']=='searching')
+                                {
+                                    ?> 
+                                    <a href="waiting-booking.php?booking=<?= $row['bk_id']; ?>">
+                                        <strong class="text-white">VIEW</strong>
+                                    </a>
+                                    <?php
+                                }
+                                else
+                                {
+                                    $ofr = $conn->query("SELECT of_id FROM offer WHERE bk_id = $bk_id AND of_stat = 'accepted' OR of_stat = 'otw'");
+                                    $of = $ofr->fetch_assoc();
+                                    ?> 
+                                    <a href="waiting-pajero.php?pajero=<?= $of['of_id']; ?>&booking=<?= $row['bk_id']; ?>">
+                                        <strong class="text-white">VIEW</strong>
+                                    </a>
+                                    <?php
+                                }
+                                ?>
                             </div>
                         </div>
                         <?php
@@ -58,26 +113,6 @@ include ('includes/passenger-header.php');
                 ?>
             </div>
        </div>
-
-        <div class="cus-modal" style="display: none;">
-            <div class="card">
-                <div class="card-header">
-                    <h5>Modal Title</h5>
-                </div>
-                <div class="card-body">
-                    <div class="text-center">
-                        <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                        <h6 class="mt-3">Waiting for driver...</h6>
-                    </div>
-                    <hr>
-                    <div class="alert alert-info">
-                        Your booking is now in search! Driver/s will send offer to your booking and need to to be accepted.
-                    </div>
-                </div>
-            </div>
-        </div>
 
 <?php
 include ('includes/footer.php');

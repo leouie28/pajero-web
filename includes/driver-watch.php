@@ -22,38 +22,45 @@ if(isset($_GET['pickup']))
         <?php
     }
 }
-?>
 
-<div class="offer-watch">
-    <div class="cus-modal last-id" data-id="1"></div>
-</div>
+$user = $_SESSION['id'];
+$pend = $conn->query("SELECT of_id FROM offer WHERE driver_id = $user AND of_stat = 'pending'");
+if($pend->num_rows>0)
+{
+    ?>
+        <div class="offer-watch">
+        <div class="cus-modal last-id" data-id="1"></div>
+    </div>
 
-<script>
-    $(document).ready(function() {
+    <script>
+        $(document).ready(function() {
 
 
-        //setInterval(fetchAccepted, 2000);
+            setInterval(fetchAccepted, 2000);
 
-        function fetchAccepted(){
+            function fetchAccepted(){
 
-            swtch = $('.offer-watch .last-id').data('id');
+                swtch = $('.offer-watch .last-id').data('id');
 
-            driver = '<?= $_SESSION['id']; ?>';
-            fetch_accepted = 1;
-            if(swtch == 1){
-                $.ajax({
-                    url: 'backend/backend-fetch.php',
-                    type: 'post',
-                    data: {
-                        driver: driver,
-                        fetch_accepted: fetch_accepted
-                    },
-                    success: function(html) {
-                        $('.offer-watch').html(html);
-                    }
-                });
+                driver = '<?= $_SESSION['id']; ?>';
+                fetch_accepted = 1;
+                if(swtch == 1){
+                    $.ajax({
+                        url: 'backend/backend-fetch.php',
+                        type: 'post',
+                        data: {
+                            driver: driver,
+                            fetch_accepted: fetch_accepted
+                        },
+                        success: function(html) {
+                            $('.offer-watch').html(html);
+                        }
+                    });
+                }
+                //console.log(swtch);
             }
-            console.log(swtch);
-        }
-    });
-</script>
+        });
+    </script>
+    <?php
+}
+?>

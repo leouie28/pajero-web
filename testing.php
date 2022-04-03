@@ -7,9 +7,21 @@
     <title>Document</title>
 </head>
 <body>
+
+    <?php
+    $val = 'hello';
+    $val2 = 'hi';
+
+    $pl = array($val, $val2);
+
+    foreach($pl as $value)
+    {
+        echo "$value <br>";
+    }
+    ?>
     <script>
-        alert('hello');
-        window.location = 'login.php';
+        // alert('hello');
+        // window.location = 'login.php';
     </script>
 </body>
 </html>

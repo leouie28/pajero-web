@@ -15,8 +15,11 @@
 <div class="content-block"></div>
 <?php
 $id = $_SESSION['id'];
+$today = date('Y-m-d');
 
-$user = $conn->query("SELECT * FROM user WHERE user_id = $id");
+$user = $conn->query("SELECT * FROM user 
+LEFT JOIN vehicle ON user.user_id = vehicle.user_id 
+WHERE user.user_id = $id");
 if($user->num_rows>0)
 {
     $user = $user->fetch_assoc();
@@ -30,14 +33,23 @@ else
     </script>
     <?php
 }
+if($user['user_stat']!='active' OR $user['vh_expire']<=$today)
+{
+    header('location:account-disabled.php');
+}
 ?>
+
+
+
 <div class="sidenav">
     <div class="avatar">
         <div class="avatar-img">
             <!-- <img src="" alt=""> -->
             <i class="fa fa-user-circle"></i>
         </div>
-        <h5><span class="badge badge-secondary"><?= $user['user_fname'] . " " . $user['user_lname']; ?></span></h5>
+        <a href="">
+            <h5><span class="badge badge-secondary"><?= $user['user_fname'] . " " . $user['user_lname']; ?></span></h5>
+        </a>
     </div>
     <hr>
     <div class="nav-link">
